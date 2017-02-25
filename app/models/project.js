@@ -14,7 +14,6 @@ var storyCardSchema = new Schema({
 
 var projectSchema = new Schema({
 	projectName: String,
-	client: String,
 	storyCards: [storyCardSchema]
 });
 
