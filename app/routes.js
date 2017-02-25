@@ -23,7 +23,11 @@ module.exports = function(app) {
             } else {
                 response.redirect('/');
             }
-        })
-    })
+        });
+    });
+
+    app.get('/fake', (request, response) => {
+        response.send({message: 'yo dawg'});
+    });
 
 };
