@@ -13,7 +13,7 @@ var storyCardSchema = new Schema({
 });
 
 var projectSchema = new Schema({
-	projectName: String,
+	projectName: { type: String, unique: true },
 	storyCards: [storyCardSchema]
 });
 

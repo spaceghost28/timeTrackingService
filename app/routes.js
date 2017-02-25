@@ -7,20 +7,16 @@ module.exports = function(app) {
     });
 
     app.post('/project', function(request, response) {
-        Project.findOne({projectName: request.body.projectName }, function(err, project) {
-            if (err) console.log('error finding project');
-            else if (!project) {
-                console.log('no project found');
-            }
-            else {
-                console.log('we found a project');
-            }
-            response.redirect('/');
+        var newProject = new Project({
+            projectName: request.body.projectName
         });
-    });
-
-    app.post('/time', function(request, response) {
-
-    });
+        newProject.save(function(err, project) {
+            if (err) {
+                response.send(err);
+            } else {
+                response.redirect('/');
+            }
+        })
+    })
 
 };
