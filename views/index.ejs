@@ -5,3 +5,11 @@
 	<input type="text" placeholder="client name" name="clientName" />
 	<button type="submit">Add Project</button>
 </form>
+
+<ul>
+	<% for (var i = 0 ; i < projects.length ; i++) { %>
+		<li>
+			<span>Project: <%= projects[i].projectName %></span>
+		</li>
+	<% } %>
+</ul>

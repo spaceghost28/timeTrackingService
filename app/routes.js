@@ -3,7 +3,14 @@ var Project = require('./models/project');
 module.exports = function(app) {
 
     app.get('/', function(request, response) {
-        response.render('index.ejs');
+        Project.find({}, function(err, projects) {
+            if (err) {
+                console.log("error finding projects");
+                response.send(err);
+            } else {
+                response.render('index.ejs', {projects: projects});
+            }
+        });
     });
 
     app.post('/project', function(request, response) {
