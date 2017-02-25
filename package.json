@@ -4,17 +4,19 @@
   "description": "stores and handles time tracked to projects",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon server.js",
     "test": "test"
   },
   "author": "chance cyphers",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.16.0",
-    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.6",
     "express": "^4.14.0",
-    "jsonwebtoken": "^7.2.1",
-    "method-override": "^2.3.7",
     "mongoose": "^4.7.8",
     "morgan": "^1.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
