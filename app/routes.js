@@ -52,6 +52,17 @@ module.exports = function(app) {
         });
     });
 
+    app.get('/storyCard/:project', (request, response) => {
+        Project.findOne({ projectName: request.params.project }, (err, project) => {
+            if (err) response.status(500).send(err);
+            if (project) {
+                response.send(project.storyCards);
+            } else {
+                response.status(404).send();
+            }
+        });
+    });
+
     app.post('/storycard', (request, response) => {
         Project.findOne({projectName: request.body.projectName}, (err, project) => {
             if (err) response.status(500).send(err);
