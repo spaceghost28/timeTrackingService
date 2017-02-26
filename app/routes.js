@@ -21,13 +21,38 @@ module.exports = function(app) {
             if (err) {
                 response.send(err);
             } else {
-                response.redirect('/');
+                response.status(201).send();
             }
         });
     });
 
-    app.get('/fake', (request, response) => {
-        response.send({message: 'yo dawg'});
+    app.get('/project', (request, response) => {
+        Project.find({}, (err, projects) => {
+            if(err) {
+                console.log(err);
+                response.status = 400;
+                response.send(err);
+            } else {
+                response.send(projects);
+            }
+        });
     });
+
+    app.delete('/project', (request, response) => {
+        Project.findOne({ projectName: request.body.projectName }, (err, project) => {
+            if (err) throw err;
+
+            if (project) {
+                project.remove((err) => {
+                    if(err) throw err;
+                    response.send();
+                });
+            } else {
+                response.status(404).send();
+            }
+        });
+    });
+
+
 
 };

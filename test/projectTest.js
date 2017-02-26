@@ -28,25 +28,12 @@ describe('Projects', () => {
 				.post('/project')
 				.send(projectToSend)
 				.end((err, res) => {
-					res.should.have.status(200);
+					res.should.have.status(201);
 					Project.findOne({projectName: 'steve'}, (err, foundProj) => {
 						chai.expect(foundProj).to.not.be.null;
 						foundProj.projectName.should.eql('steve');
 						done();
 					});
-				});
-		});
-	});
-
-	describe('/GET fake', () => {
-
-		it('should say yo dawg to me', (done) => {
-			chai.request(server)
-				.get('/fake')
-				.end((err, response) => {
-					response.should.have.status(200);
-					response.body.message.should.be.eql("yo dawg");
-					done();
 				});
 		});
 
