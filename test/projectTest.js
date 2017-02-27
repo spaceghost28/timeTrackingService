@@ -39,4 +39,23 @@ describe('Projects', () => {
 
 	});
 
+	describe('POST time', () => {
+
+		it('should do something', (done) => {
+			chai.request(server)
+				.post('/time')
+				.send({
+					projectName: "steve",
+					cardNumber: 123,
+					userId: 654456,
+					startTime: Date.now(),
+					endTime: new Date(2342340)
+				})
+				.end((err, res) => {
+					done();
+				});
+		});
+
+	});
+
 });

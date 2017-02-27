@@ -19,7 +19,7 @@ module.exports = function(app) {
         });
         newProject.save(function(err, project) {
             if (err) {
-                response.status(400).send(err);
+                response.status(500).send(err);
             } else {
                 response.status(201).send();
             }
@@ -67,7 +67,7 @@ module.exports = function(app) {
         Project.findOne({projectName: request.body.projectName}, (err, project) => {
             if (err) response.status(500).send(err);
             if (project) {
-                if (cardAlreadyExists(project, request.body.cardNumber)) {
+                if (findStorycard(project, request.body.cardNumber)) {
                     response.status(409).send();
                 }
                 project.storyCards.push({
@@ -83,7 +83,29 @@ module.exports = function(app) {
         });
     });
 
-    let cardAlreadyExists = function(project, cardNumber) {
+    app.post('/time', (request, response) => {
+        Project.findOne({ projectName: request.body.projectName }, (err, project) => {
+            if (err) response.status(500).send(err);
+            if (project) {
+                let storycard = findStorycard(project, request.body.cardNumber);
+                if (!storycard) response.status(404).send();
+
+                storycard.timeEntries.push({
+                    _userId: request.body.userId,
+                    startTime: request.body.startTime,
+                    endTime: request.body.endTime
+                });
+                project.save((err) => {
+                    if (err) response.status(500).send(err);
+                    response.status(201).send();
+                });
+            } else {
+                response.status(404).send();
+            }
+        });
+    });
+
+    let findStorycard = function(project, cardNumber) {
         return project.storyCards.find(sc => sc.cardNumber == cardNumber);
     }
 
