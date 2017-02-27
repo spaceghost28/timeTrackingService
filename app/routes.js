@@ -83,6 +83,16 @@ module.exports = function(app) {
         });
     });
 
+    app.get('/time/:project/:storycard', (request, response) => {
+        Project.findOne({projectName: request.params.project}, (err, project) => {
+            if (err) response.status(500).send(err);
+            if (!project) response.status(404).send({message: "project not found"});
+            let storycard = findStorycard(project, request.params.storycard);
+            if (!storycard) response.status(404).send({message: "storycard not found"});
+            response.send(storycard.timeEntries);
+        });
+    });
+
     app.post('/time', (request, response) => {
         Project.findOne({ projectName: request.body.projectName }, (err, project) => {
             if (err) response.status(500).send(err);
