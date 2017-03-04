@@ -98,8 +98,12 @@ module.exports = function(app) {
             if (err) response.status(500).send(err);
             if (project) {
                 let storycard = findStorycard(project, request.body.cardNumber);
-                if (!storycard) response.status(404).send();
-
+                if (!storycard) {
+                    project.storyCards.push({
+                        cardNumber: request.body.cardNumber
+                    });
+                    storycard = findStorycard(project, request.body.cardNumber);
+                }
                 storycard.timeEntries.push({
                     _userId: request.body.userId,
                     startTime: request.body.startTime,
